@@ -38,6 +38,9 @@ class Sala(models.Model):
     def __str__(self):
         return self.identificador
 
+    def get_unidade(self):
+        return self.unidade
+
 class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
     nascimento = models.DateTimeField('data de nascimento')
