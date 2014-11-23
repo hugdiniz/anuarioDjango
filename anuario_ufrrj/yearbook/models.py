@@ -31,6 +31,9 @@ class Unidade_Organizacional(models.Model):
     def get_sons(self):
         return Unidade_Organizacional.objects.filter(parent=self)
 
+    def recuperar_unidades_raiz(self):
+        return Unidade_Organizacional.objects.filter(parent=None)
+
 class Sala(models.Model):
     identificador = models.CharField(max_length=200)
     unidade = models.ForeignKey(Unidade_Organizacional)

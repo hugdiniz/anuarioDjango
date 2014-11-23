@@ -1,0 +1,9 @@
+{% if parent_uorgs_list %}
+<ul>
+	{% for uorg in parent_uorgs_list %}
+		<li><a href="{% url 'uorg_detail' uorg.id %}">{{ uorg.nome }}</a></li>
+	{% endfor %}
+</ul>
+{% else %}
+	<p>Nenhuma Unidade Organizacional Raiz encontrada</p>
+{% endif %}

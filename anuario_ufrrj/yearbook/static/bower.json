@@ -1,0 +1,27 @@
+{
+	"name": "test_polymer",
+  	"version": "0.0.0",
+  	"authors": [
+		"@vpcsilva"
+  	],
+  	"license": "MIT",
+  	"private": true,
+  	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+  	],
+  	"dependencies": {
+		"jquery"			: "~2.1.1",
+		"polymer"			: "Polymer/polymer#^0.5.0",
+		"core-drawer-panel"	: "Polymer/core-drawer-panel#^0.5.0",
+		"core-menu"			: "Polymer/core-menu#^0.5.0",
+		"core-item"			: "Polymer/core-item#^0.5.0",
+		"core-icon-button"	: "Polymer/core-icon-button#^0.5.0",
+		"core-toolbar"		: "Polymer/core-toolbar#^0.5.0",
+		"core-scroll-header-panel"	: "Polymer/core-scroll-header-panel#^0.5.0",
+		"core-ajax"			: "Polymer/core-ajax#^0.5.0"
+  	}	
+}
