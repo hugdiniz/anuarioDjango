@@ -5,7 +5,6 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'anuario_ufrrj.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^polymer/', include('yearbook.urls')),
     url(r'^anuario/', include('yearbook.urls')),
     url(r'^admin/', include(admin.site.urls))
 )

@@ -36,6 +36,8 @@ class Unidade_Organizacional(models.Model):
 
 class Sala(models.Model):
     identificador = models.CharField(max_length=200)
+    predio = models.CharField(max_length=200)
+    andar = models.IntegerField()
     unidade = models.ForeignKey(Unidade_Organizacional)
 
     def __str__(self):

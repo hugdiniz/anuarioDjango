@@ -1,0 +1,67 @@
+@charset "UTF8";
+
+:host {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+#core_drawer_panel {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+#section {
+	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+	background-color: rgb(250, 250, 250);
+}
+#section1 {
+	height: 100%;
+	box-sizing: border-box;
+	background-color: rgb(221, 221, 221);
+}
+#core_menu {
+	font-size: 16px;
+	left: 2px;
+	top: 102px;
+	position: absolute;
+}
+#core_submenu1 {
+	left: 0px;
+	top: 110px;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+#institutoMultiDisciplinarTree {
+	height: 100%;
+	position: absolute;
+	left: 50px;
+	top: 160px;
+}
+
+#logo-container {
+	position: relative;
+	width: 100%;
+	padding: 0px;
+}
+#core_scroll_header_panel {
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	position: relative;
+}
+#core_toolbar {
+	color: rgb(241, 241, 241);
+	fill: rgb(241, 241, 241);
+	background-color: rgb(66, 133, 244);
+}
+#section2 {
+	height: 5000px;
+	background: linear-gradient(rgb(214, 227, 231), rgb(173, 216, 230));
+}
+
+
