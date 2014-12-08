@@ -7,7 +7,7 @@ from yearbook.models import Unidade_Organizacional
 def index(request):
 	uorg = Unidade_Organizacional()
 	parent_uorgs_list = uorg.recuperar_unidades_raiz()
-	template = loader.get_template('yearbook/index.html')
+	template = loader.get_template('angularJS/index.html')
 	context = RequestContext(request, {
 		'parent_uorgs_list' : parent_uorgs_list,
 		})
