@@ -1,4 +1,6 @@
 from django.db import models
+from django.core import serializers
+
 
 # Create your models here.
 
@@ -17,13 +19,16 @@ class Lotacao(models.Model):
 
 class Unidade_Organizacional(models.Model):
     nome = models.CharField(max_length=200)
-    abreviacao = models.CharField(max_length=200, blank=True)
+    sigla = models.CharField(max_length=200, blank=True)
     parent = models.ForeignKey('self', null=True, related_name='children')
+    telefone = models.CharField(max_length=30)
+    ramal = models.CharField(max_length=5)
+    localidade = models.CharField(max_length=300)
 
     def __str__(self):
-        if self.abreviacao is None:
+        if self.sigla is None:
             return self.nome
-        return self.abreviacao
+        return self.sigla
 
     def get_parent(self):
         return self.parent
@@ -33,6 +38,9 @@ class Unidade_Organizacional(models.Model):
 
     def recuperar_unidades_raiz(self):
         return Unidade_Organizacional.objects.filter(parent=None)
+
+    def recuperar_arvore(self):
+        return serializers.serializer("json", Unidade_Organizacional.objects.all())
 
 class Sala(models.Model):
     identificador = models.CharField(max_length=200)

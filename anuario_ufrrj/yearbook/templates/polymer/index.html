@@ -7,6 +7,7 @@
 
 		<meta charset="UTF-8">
 
+		<link rel="import" href="{% static 'bower_components/font-roboto/roboto.html'  %}">	
 		<script src="{% static 'bower_components/webcomponentsjs/webcomponents.min.js' %}"></script>
 		<link rel="import" href="{% static 'bower_components/polymer/polymer.html' %}">
 		<link rel="import" href="{% static 'bower_components/core-drawer-panel/core-drawer-panel.html' %}">
@@ -29,7 +30,18 @@
 					<img id="" src="{% static 'yearbook/img/logomarca-normal-sombra.png' %}" horizontal layout start/>
 				  </a>
 				</div>
-				<core-submenu active id="core_submenu1" icon="arrow-drop-down" label="UFRRJ">
+				{% if parent_uorgs_list %}
+					{% for uorg in parent_uorgs_list %}
+						{% if uorg.get_sons != NONE %}
+							<core-submenu active  icon="arrow-drop-down" label="{{ uorg.sigla }}">
+							{% for uorg_son in uorg.get_sons %}
+								<core-item id="core_item3" label="{{ uorg_son.nome }}" horizontal center layout></core-item>
+							{% endfor %}
+							</core-submenu>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				<!-- <core-submenu active id="core_submenu1" icon="arrow-drop-down" label="UFRRJ">
 				  <core-item id="core_item2" label="Instituto Zootecnia" horizontal center layout></core-item>
 				  <core-item id="core_item3" label="Instituto de Agronomia" horizontal center layout></core-item>
 				  <core-item id="core_item4" label="Instituto de Florestas" horizontal center layout></core-item>
@@ -38,7 +50,7 @@
 					<core-item id="core_item6" label="DTL" horizontal center layout></core-item>
 					<core-item id="core_item7" label="DAT" horizontal center layout active></core-item>
 				  </core-submenu>
-				</core-submenu>
+				</core-submenu> -->
 			  </section>
 			  <section id="section1" main>
 				<core-scroll-header-panel headermargin="128" condenses headerheight="192" id="core_scroll_header_panel">
@@ -48,9 +60,12 @@
 					<div id="div" flex></div>
 					<core-icon-button icon="search" id="core_icon_button1"></core-icon-button>
 					<core-icon-button icon="more-vert" id="core_icon_button2"></core-icon-button>
-					<div id="div1" class="bottom indent">Title</div>
+					<div id="div1" class="bottom indent">{{uorg.nome}}</div>
 				  </core-toolbar>
-				  <section id="section2" content></section>
+				  <section id="section2" content>
+				  	{{uorg.recuperar_arvore}}
+
+				  </section>
 				</core-scroll-header-panel>
 			  </section>
 			</core-drawer-panel>
