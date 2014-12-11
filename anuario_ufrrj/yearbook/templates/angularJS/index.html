@@ -11,13 +11,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
   	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
      
-  <script type="text/javascript">
-  $(document).ready(function () {
-	$('label.tree-toggler').click(function () {
-		$(this).parent().children('ul.tree').toggle(300);
-	});
+  <script type="text/javascript"> 
+
+    function detalharServidor(id)
+    {
+        //TODO: Ajax do para comunuicação
+        $("#modalServidor").modal("show");
+    }
+
+     $(document).ready(function () {
+        $('label.tree-toggler').click(function () {
+            $(this).parent().children('ul.tree').toggle(300);
+        });
+    
+
 });
 </script>
 </head>
@@ -45,7 +54,10 @@
         width: 35%;
     }
     .tree{
-        margin-left: 15px;
+        margin-left: 15px;  
+    }
+    .modal-backdrop {
+        z-index: -1;
     }
 
 </style>
@@ -108,7 +120,7 @@
                 <span>Servidores</span>
             </h5>
             <div class="list-group">              
-              <a href="#" class="list-group-item">Ana Maria Dantas Soares</a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">Ana Maria Dantas Soares</a>
               <a href="#" class="list-group-item">Eduardo Mendes Callado</a>
               <a href="#" class="list-group-item">Cristiane Venancio</a>
               <a href="#" class="list-group-item">Ana Lúcia dos Santos Barbosa  </a>
@@ -116,6 +128,38 @@
         </div>
 
     </div>
-</div>
+
+    <!-- Modal -->
+
+<div id="modalServidor" style="display: none; height: 100%; width: 150%; top: 0px;" class="modal fade" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Ana Maria Dantas Soares</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+            <span>Cargo:</span>
+            <span id="cargoServidor">Docente</span>
+        </p>
+        <p>
+            <span>Sala:</span>
+            <span id="salaServidor">Sala 123 - A</span>
+        </p>
+         <p>
+            <span>Função:</span>
+            <span id="funcaoServidor">Reitora</span>
+        </p>    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>   
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>
+</div>
+
+
