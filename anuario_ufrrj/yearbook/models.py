@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.core import serializers
 
@@ -7,6 +8,12 @@ from django.core import serializers
 class Funcao(models.Model):
     nome = models.CharField(max_length=200)
     
+    def __str__(self):
+        return self.nome
+
+class Cargo(models.Model):
+    nome = models.CharField(max_length=200)
+
     def __str__(self):
         return self.nome
 
@@ -59,14 +66,8 @@ class Pessoa(models.Model):
     nascimento = models.DateTimeField('data de nascimento')
     foto = models.CharField(max_length=200, blank=True)
     lotacao_atual = models.ForeignKey(Lotacao)
-    historico = models.ManyToManyField(Lotacao, related_name='lotacoes_anteriores')
-
-    def __str__(self):
-        return self.nome
-
-class Cargo(models.Model):
-    nome = models.CharField(max_length=200)
-    oucupante = models.ForeignKey(Pessoa)
+    cargo = models.ForeignKey(Cargo)
+    historico = models.ManyToManyField(Lotacao, related_name='lotacoes_anteriores', blank=True)
 
     def __str__(self):
         return self.nome
