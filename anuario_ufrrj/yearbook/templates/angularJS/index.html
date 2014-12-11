@@ -7,6 +7,9 @@
   <!-- Stylesheets-->
 	<link class="cssdeck" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" class="cssdeck">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
   	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
      
@@ -33,7 +36,17 @@
         min-height: 450px;
         width: 65%;
     }
-
+    .informacao {
+        float: left;
+        width: 60%;
+    }
+    .painelServidores{
+        float: left;
+        width: 35%;
+    }
+    .tree{
+        margin-left: 15px;
+    }
 
 </style>
 <body>  
@@ -43,7 +56,7 @@
             <img class="ruralLogo" style="margin-left: 15%; height: 150px;max-width: 100%;" src="{% static 'yearbook/img/logomarca_ufrrj_azul2.png' %}" horizontal layout start/>
          </a>
         <ul class="nav nav-list">
-            <li><label class="tree-toggler nav-header">Anuario</label>                
+            <li><label class="tree-toggler nav-header">Anuario  </label>                
             </li>
             <li class="divider"></li>
             <li><label class="tree-toggler nav-header">Header 2</label>
@@ -81,7 +94,8 @@
 </div>
 <div id="corpo" class="painel">
     <div id="nomeUorg">
-        <h3 style="border-bottom: medium solid blueviolet;"><span>Universidade Federal Rural do Rio de Janeiro</span> 
+        <h3 style="border-bottom: medium solid blueviolet;">
+            <span>Universidade Federal Rural do Rio de Janeiro</span> 
         </h3>
     </div>
     <div id="corpoInformacao">
@@ -89,6 +103,18 @@
             <span>Localização: </span>
             <span>Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
         </div>
+        <div class="painelServidores"> 
+            <h5 style="border-bottom: medium solid blueviolet;">
+                <span>Servidores</span>
+            </h5>
+            <div class="list-group">              
+              <a href="#" class="list-group-item">Ana Maria Dantas Soares</a>
+              <a href="#" class="list-group-item">Eduardo Mendes Callado</a>
+              <a href="#" class="list-group-item">Cristiane Venancio</a>
+              <a href="#" class="list-group-item">Ana Lúcia dos Santos Barbosa  </a>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>
