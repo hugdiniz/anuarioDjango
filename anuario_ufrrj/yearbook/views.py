@@ -31,7 +31,7 @@ def detail_cargo(request, cargo_id):
 	return HttpResponse("Voce esta procurando o Cargo %s" % cargo_id)
 
 def polymer(request):
-	return render(request, 'polymer/index.html')
+	return render(request, 'angularJS/index.html')
 
 def get_sons_json(request, uorg_id):
 	uorg = Unidade_Organizacional(id=uorg_id)
