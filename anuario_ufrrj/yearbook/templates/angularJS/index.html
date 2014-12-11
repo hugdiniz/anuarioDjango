@@ -25,8 +25,6 @@
         $('label.tree-toggler').click(function () {
             $(this).parent().children('ul.tree').toggle(300);
         });
-    
-
 });
 </script>
 </head>
@@ -112,18 +110,41 @@
     </div>
     <div id="corpoInformacao">
         <div class="informacao">
-            <span>Localização: </span>
-            <span>Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
+            <p>                
+                <span>Localização: </span>
+                <span>Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
+            </p>
+            <p>
+                <span>Abreviação: </span>
+                <span>UFRRJ</span>
+            </p>
+            <p>
+                <span>Telefone: </span>
+                <span>(21)2681-4600</span>
+            </p>
+
         </div>
         <div class="painelServidores"> 
             <h5 style="border-bottom: medium solid blueviolet;">
                 <span>Servidores</span>
             </h5>
             <div class="list-group">              
-              <a href="#" class="list-group-item" onclick="detalharServidor(1)">Ana Maria Dantas Soares</a>
-              <a href="#" class="list-group-item">Eduardo Mendes Callado</a>
-              <a href="#" class="list-group-item">Cristiane Venancio</a>
-              <a href="#" class="list-group-item">Ana Lúcia dos Santos Barbosa  </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <span>Ana Maria Dantas Soares</span>              
+              </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span>Eduardo Mendes Callado</span> 
+              </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span>Cristiane Venancio</span>
+              </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span>Ana Lúcia dos Santos Barbosa</span>
+              </a>
             </div>
         </div>
 
