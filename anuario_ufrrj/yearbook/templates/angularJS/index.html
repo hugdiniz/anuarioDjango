@@ -20,13 +20,19 @@
         //TODO: Ajax do para comunuicação
         $("#modalServidor").modal("show");
     }
+    function detalharUorg(idComponente)
+    {
+        //TODO: Ajax do para comunuicação
+        $(".ativo").addClass("naoAtivo");
+        $(".ativo").removeClass("ativo");
+        $("#"+idComponente).addClass("ativo");
+       $("#"+idComponente).removeClass("naoAtivo");
+    }
 
      $(document).ready(function () {
         $('label.tree-toggler').click(function () {
             $(this).parent().children('ul.tree').toggle(300);
         });
-    
-
 });
 </script>
 </head>
@@ -59,6 +65,18 @@
     .modal-backdrop {
         z-index: -1;
     }
+    .fieldTitle{
+        font-weight: bold;
+    }
+    .ativo
+    {
+       background: none repeat scroll 0% 0% rgb(169, 194, 216);
+       color: rgb(9, 41, 68);
+    }
+    .naoAtivo{
+        color: #4483ba;
+    }
+
 
 </style>
 <body>  
@@ -71,30 +89,14 @@
             <li><label class="tree-toggler nav-header">Anuario  </label>                
             </li>
             <li class="divider"></li>
-            <li><label class="tree-toggler nav-header">Header 2</label>
-                <ul class="nav nav-list tree">
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><label class="tree-toggler nav-header">Header 2.1</label>
-                        <ul class="nav nav-list tree">
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><label class="tree-toggler nav-header">Header 2.1.1</label>
-                                <ul class="nav nav-list tree">
-                                    <li><a href="#">Link</a></li>
-                                    <li><a href="#">Link</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+            <li><label id="UFRRJMenu" onclick="detalharUorg('UFRRJMenu')" class="tree-toggler nav-header ativo">UFRRJ</label>
+                <ul class="nav nav-list tree">                   
+                    <li><label id="institutoZootecniaMenu" onclick="detalharUorg('institutoZootecniaMenu')" class="naoAtivo tree-toggler nav-header">Instituto de Zootecnia</label>                        
                     </li>
-                    <li><label class="tree-toggler nav-header">Header 2.2</label>
-                        <ul class="nav nav-list tree">
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><label class="tree-toggler nav-header">Header 2.2.1</label>
-                                <ul class="nav nav-list tree">
-                                    <li><a href="#">Link</a></li>
-                                    <li><a href="#">Link</a></li>
+                    <li><label onclick="detalharUorg('institutoMultidisciplinarMenu')" id="institutoMultidisciplinarMenu" class="tree-toggler nav-header naoAtivo">Instituto Multidisciplinar</label>
+                        <ul class="nav nav-list tree">                            
+                            <li><label onclick="detalharUorg('DCCMenu')" id="DCCMenu" class="tree-toggler nav-header naoAtivo">DCC</label>
+                                <ul class="nav nav-list tree">                                    
                                 </ul>
                             </li>
                         </ul>
@@ -112,18 +114,42 @@
     </div>
     <div id="corpoInformacao">
         <div class="informacao">
-            <span>Localização: </span>
-            <span>Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
+            <p>                
+                <span class="fieldTitle">Localização: </span>
+                <span >Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
+            </p>
+            <p>
+                <span class="fieldTitle">Abreviação: </span>
+                <span>UFRRJ</span>
+            </p>
+            <p>
+                <span class="fieldTitle">Telefone: </span>
+                <span>(21)2681-4600</span>
+            </p>
+             
+
         </div>
         <div class="painelServidores"> 
             <h5 style="border-bottom: medium solid blueviolet;">
                 <span>Servidores</span>
             </h5>
             <div class="list-group">              
-              <a href="#" class="list-group-item" onclick="detalharServidor(1)">Ana Maria Dantas Soares</a>
-              <a href="#" class="list-group-item">Eduardo Mendes Callado</a>
-              <a href="#" class="list-group-item">Cristiane Venancio</a>
-              <a href="#" class="list-group-item">Ana Lúcia dos Santos Barbosa  </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <span>Ana Maria Dantas Soares</span>              
+              </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span>Eduardo Mendes Callado</span> 
+              </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span>Cristiane Venancio</span>
+              </a>
+              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span>Ana Lúcia dos Santos Barbosa</span>
+              </a>
             </div>
         </div>
 
