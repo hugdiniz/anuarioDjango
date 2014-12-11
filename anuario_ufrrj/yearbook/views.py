@@ -5,7 +5,16 @@ from django.template import RequestContext, loader
 from yearbook.models import Unidade_Organizacional
 from django.core import serializers
 import json
+
+# Classes
+class Uorg_tree:
+	nome = ""
+	id  = 0
+	filhos = []
+
 # Create your views here.
+
+
 def index(request):
 	uorg = Unidade_Organizacional()
 	parent_uorgs_list = uorg.recuperar_unidades_raiz()
@@ -37,5 +46,19 @@ def polymer(request):
 def get_sons_json(request, uorg_id):
 	uorg = Unidade_Organizacional(id=uorg_id)
 	result =  serializers.serialize("json", uorg.get_sons())
-	return HttpResponse(json.dumps(result))
+	return HttpResponse(result)
+
+def preenche_arvore(uorg):
+	json = Uorg_tree
+	json.nome = uorg.nome
 	
+	for filho in uorg.get_sons:
+		json.filhos = preenche_arvore(filho)
+
+	return json
+
+def get_arvore_menu(request):
+	uorg = Unidade_Organizacional.objects.get(id=1)
+	uorg
+
+
