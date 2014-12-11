@@ -8,8 +8,8 @@
 	<link class="cssdeck" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" class="cssdeck">
   	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>   
- 
+	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>  
+     
   <script type="text/javascript">
   $(document).ready(function () {
 	$('label.tree-toggler').click(function () {
@@ -21,32 +21,29 @@
 <style>
     .ruralLogo:hover {background: url({% static 'yearbook/img/logomarca_ufrrj_pb_02.png' %}) no-repeat; }
 
+    .painel {
+        background-color: #f7f7f9;
+        border: 1px solid #e1e1e8;
+        border-radius: 4px;
+        margin-bottom: 14px;
+        padding: 9px 14px;
+        float: left;
+        margin-left: 50px;
+        margin-top: 50px;
+        min-height: 450px;
+        width: 65%;
+    }
+
+
 </style>
 <body>  
- <div class="well" style="width: 300px; padding: 8px 0px; height: 100%;">
+ <div class="well" style="width: 300px; padding: 8px 0px; height: 100%;float:left;">
     <div style="overflow-x: hidden; height: 100%;">
          <a id="a" href="http://ufrrj.br" end>
             <img class="ruralLogo" style="margin-left: 15%; height: 150px;max-width: 100%;" src="{% static 'yearbook/img/logomarca_ufrrj_azul2.png' %}" horizontal layout start/>
          </a>
         <ul class="nav nav-list">
-
-            <li><label class="tree-toggler nav-header">Header 1</label>
-                <ul class="nav nav-list tree">
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><label class="tree-toggler nav-header">Header 1.1</label>
-                        <ul class="nav nav-list tree">
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><label class="tree-toggler nav-header">Header 1.1.1</label>
-                                <ul class="nav nav-list tree">
-                                    <li><a href="#">Link</a></li>
-                                    <li><a href="#">Link</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+            <li><label class="tree-toggler nav-header">Anuario</label>                
             </li>
             <li class="divider"></li>
             <li><label class="tree-toggler nav-header">Header 2</label>
@@ -80,6 +77,18 @@
                 </ul>
             </li>
         </ul>
+    </div>
+</div>
+<div id="corpo" class="painel">
+    <div id="nomeUorg">
+        <h3 style="border-bottom: medium solid blueviolet;"><span>Universidade Federal Rural do Rio de Janeiro</span> 
+        </h3>
+    </div>
+    <div id="corpoInformacao">
+        <div class="informacao">
+            <span>Localização: </span>
+            <span>Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
+        </div>
     </div>
 </div>
 </body>
