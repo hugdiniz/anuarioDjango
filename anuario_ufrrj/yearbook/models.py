@@ -18,9 +18,11 @@ class Cargo(models.Model):
         return self.nome
 
 class Lotacao(models.Model):
-    nome = models.CharField(max_length=200)
+    data_inicio = models.DateField()
+    data_fim = models.DateField(blank=True)
     funcao = models.ForeignKey(Funcao)
-
+    uorg = models.ForeignKey(Unidade_Organizacional)
+    
     def __str__(self):
         return self.nome
 
