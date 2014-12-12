@@ -20,6 +20,10 @@
     float: left;
     width: 35%;
 }
+.painelSalas { 
+    float: left;
+    width: 70%;
+}
 .tree{
     margin-left: 15px;  
 }
