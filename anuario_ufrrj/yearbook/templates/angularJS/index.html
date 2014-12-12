@@ -56,51 +56,52 @@
 
 
 <div id="corpo" class="painel">
+
+    {# Detalhando Uorg #}
     <div id="nomeUorg">
         <h3 style="border-bottom: medium solid blueviolet;">
-            <span>Universidade Federal Rural do Rio de Janeiro</span> 
+            <span> 
+                {% block title %}
+                    {{uorg.nome}}        
+                {% endblock title %} 
+            </span> 
         </h3>
     </div>
     <div id="corpoInformacao">
         <div class="informacao">
             <p>                
                 <span class="fieldTitle">Localização: </span>
-                <span >Rodovia BR 465 - Km 7 - Campus Universitário - Zona Rural, Seropédica - RJ, 23851-970</span>
+                <span >{{uorg.localidade}}</span>
             </p>
             <p>
                 <span class="fieldTitle">Abreviação: </span>
-                <span>UFRRJ</span>
+                <span>{{uorg.sigla}}</span>
             </p>
             <p>
                 <span class="fieldTitle">Telefone: </span>
-                <span>(21)2681-4600</span>
+                <span>{{uorg.telefone}}</span>
             </p>
              
 
         </div>
+
+
+        {% if pessoas %}
         <div class="painelServidores"> 
             <h5 style="border-bottom: medium solid blueviolet;">
                 <span>Servidores</span>
             </h5>
-            <div class="list-group">              
-              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                  <span>Ana Maria Dantas Soares</span>              
-              </a>
-              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <span>Eduardo Mendes Callado</span> 
-              </a>
-              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <span>Cristiane Venancio</span>
-              </a>
-              <a href="#" class="list-group-item" onclick="detalharServidor(1)">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <span>Ana Lúcia dos Santos Barbosa</span>
-              </a>
+            <div class="list-group">    
+                {% for pessoa in pessoas %}
+                <a href="#" class="list-group-item" onclick="detalharServidor({{pessoa.pk}})">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span> {{pessoa.nome}} </span>              
+                </a>                 
+                {% endfor %}
             </div>
-        </div>
+        </div>    
+        {% endif %}
+        
 
     </div>
 
@@ -111,7 +112,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Ana Maria Dantas Soares</h4>
+        <h4 id="nomeServidor" class="modal-title">Ana Maria Dantas Soares</h4>
       </div>
       <div class="modal-body">
         <p>
@@ -133,8 +134,24 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-</body>
-</html>
 </div>
+</body>
+<script type="text/javascript">
+    function detalharServidor(id) {
+
+        $.getJSON('/anuario/pessoa/'+id+'detail/', function(json, textStatus) {
+            $.('#cargoServidor').val('json.Cargo');
+            $.('#salaServidor').val('json.Sala');
+            $.('#funcaoServidor').val('json.Funcao');
+            $.('#nomeServidor').val('json.Nome');
+        });
+
+        //TODO: Ajax do para comunuicação
+        $("#modalServidor").modal("show");
+    }
+
+</script>
+</html>
+
 
 

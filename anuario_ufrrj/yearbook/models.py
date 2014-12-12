@@ -54,6 +54,7 @@ class Sala(models.Model):
 
 
 class Lotacao(models.Model):
+    nome = models.CharField(max_length=100)
     comentarios = models.CharField(blank=True, max_length=500)
     funcao = models.ForeignKey(Funcao)
     uorg = models.ForeignKey(Unidade_Organizacional)

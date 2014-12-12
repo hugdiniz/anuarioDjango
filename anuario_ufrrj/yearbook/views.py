@@ -37,13 +37,14 @@ def pessoa_info(request, pessoa_id):
 def uorg_info(request, uorg_id):
 	try:
 		uorg = Unidade_Organizacional.objects.get(pk=uorg_id)
-		parent_uorg = uorg.parent
 
 		sub_uorgs = uorg.get_sons
 		lotacoes = Lotacao.objects.filter(uorg=uorg)
 		pessoas = []
 		for lotacao in lotacoes:
-			pessoas.append(lotacao)
+			pessoas.append(Pessoa.objects.get(lotacao_atual=lotacao))
+
+		salas = Sala.objects.filter(uorg=uorg)
 
 		template = loader.get_template('angularJS/index.html')
 
@@ -51,7 +52,7 @@ def uorg_info(request, uorg_id):
 			'uorg' 		: uorg,
 			'sub_uorgs'	: sub_uorgs,
 			'pessoas'	: pessoas,
-			'parent_uorg' : parent_uorg,
+			'salas'		: salas,
  			})
 
 		return HttpResponse(template.render(context))

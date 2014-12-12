@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
 	
 	#urls referentes a uorg
-	url(r'^/(?P<uorg_id>\d+)/$', views.uorg_info, name='uorg_info'),
+	url(r'^(?P<uorg_id>\d+)/$', views.uorg_info, name='uorg_info'),
 
 	# urls referentes a pessoa
 	url(r'^pessoa/(?P<pessoa_id>\d+)/detail/$', views.pessoa_info, name='pessoa_info'),
