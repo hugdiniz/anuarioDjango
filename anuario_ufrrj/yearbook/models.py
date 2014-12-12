@@ -44,13 +44,13 @@ class Sala(models.Model):
     identificador = models.CharField(max_length=200)
     predio = models.CharField(max_length=200)
     andar = models.IntegerField()
-    unidade = models.ForeignKey(Unidade_Organizacional)
+    uorg = models.ForeignKey(Unidade_Organizacional)
 
     def __str__(self):
         return self.identificador
 
-    def get_unidade(self):
-        return self.unidade
+    def get_uorg(self):
+        return self.uorg
 
 
 class Lotacao(models.Model):
