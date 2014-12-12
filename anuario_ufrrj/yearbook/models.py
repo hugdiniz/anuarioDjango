@@ -23,7 +23,7 @@ class Unidade_Organizacional(models.Model):
     parent = models.ForeignKey('self', null=True, related_name='children')
     telefone = models.CharField(max_length=30)
     ramal = models.CharField(max_length=5)
-    localidade = models.CharField(max_length=300)
+    localidade = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
         if self.sigla is None:
@@ -53,28 +53,30 @@ class Sala(models.Model):
         return self.uorg
 
 
+class Pessoa(models.Model):
+    nome = models.CharField(max_length=200)
+    nascimento = models.DateTimeField('data de nascimento')
+    foto = models.CharField(max_length=200, blank=True)
+    cargo = models.ForeignKey(Cargo)
+    # historico = models.ManyToManyField(Lotacao, related_name='lotacoes_anteriores', blank=True)
+    ferias_inicio = models.DateTimeField('inicio das ferias', blank=True)
+    ferias_fim = models.DateTimeField('fim das ferias', blank=True)
+
+
+    def __str__(self):
+        return self.nome
+
+
 class Lotacao(models.Model):
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=200)
     comentarios = models.CharField(blank=True, max_length=500)
     funcao = models.ForeignKey(Funcao)
+    pessoa = models.ForeignKey(Pessoa)
     uorg = models.ForeignKey(Unidade_Organizacional)
+    sala = models.ForeignKey(Sala, blank=True)
     
     def __str__(self):
         return self.nome
 
     def get_lotacoes_uorg(self, unidade):
         return Lotacao.objects.filter(uorg=unidade)
-
-class Pessoa(models.Model):
-    nome = models.CharField(max_length=200)
-    nascimento = models.DateTimeField('data de nascimento')
-    foto = models.CharField(max_length=200, blank=True)
-    lotacao_atual = models.ForeignKey(Lotacao)
-    cargo = models.ForeignKey(Cargo)
-    historico = models.ManyToManyField(Lotacao, related_name='lotacoes_anteriores', blank=True)
-
-    def __str__(self):
-        return self.nome
-
-
-

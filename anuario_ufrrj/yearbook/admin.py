@@ -5,8 +5,8 @@ from yearbook.models import Funcao, Lotacao, Unidade_Organizacional, Sala, Cargo
 
 class PessoaAdmin(admin.ModelAdmin):
 	fieldsets = [
-		(None,					{'fields'	:	['nome','foto','lotacao_atual','cargo']}),
-		('Data de Nascimento',	{'fields'	:	['nascimento']}),
+		(None,					{'fields'	:	['nome','foto','cargo']}),
+		('Data de Nascimento',	{'fields'	:	['nascimento', 'ferias_inicio', 'ferias_fim']}),
 	]
 
 admin.site.register(Funcao)

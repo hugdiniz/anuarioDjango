@@ -93,7 +93,7 @@
             </h5>
             <div class="list-group">    
                 {% for pessoa in pessoas %}
-                <a href="#" class="list-group-item" onclick="detalharServidor({{pessoa.pk}})">
+                <a href="#" class="list-group-item" onclick="detalharServidor( {{pessoa.pk}} )">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span> {{pessoa.nome}} </span>              
                 </a>                 
@@ -101,6 +101,8 @@
             </div>
         </div>    
         {% endif %}
+
+       
         
 
     </div>
@@ -136,21 +138,6 @@
 </div><!-- /.modal -->
 </div>
 </body>
-<script type="text/javascript">
-    function detalharServidor(id) {
-
-        $.getJSON('/anuario/pessoa/'+id+'detail/', function(json, textStatus) {
-            $.('#cargoServidor').val('json.Cargo');
-            $.('#salaServidor').val('json.Sala');
-            $.('#funcaoServidor').val('json.Funcao');
-            $.('#nomeServidor').val('json.Nome');
-        });
-
-        //TODO: Ajax do para comunuicação
-        $("#modalServidor").modal("show");
-    }
-
-</script>
 </html>
 
 

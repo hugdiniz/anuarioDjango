@@ -35,6 +35,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nome', models.CharField(max_length=200)),
+                ('comentarios', models.CharField(max_length=500, blank=True)),
                 ('funcao', models.ForeignKey(to='yearbook.Funcao')),
             ],
             options={
@@ -48,7 +49,8 @@ class Migration(migrations.Migration):
                 ('nome', models.CharField(max_length=200)),
                 ('nascimento', models.DateTimeField(verbose_name=b'data de nascimento')),
                 ('foto', models.CharField(max_length=200, blank=True)),
-                ('historico', models.ManyToManyField(related_name=b'lotacoes_anteriores', to='yearbook.Lotacao')),
+                ('cargo', models.ForeignKey(to='yearbook.Cargo')),
+                ('historico', models.ManyToManyField(related_name=b'lotacoes_anteriores', to='yearbook.Lotacao', blank=True)),
                 ('lotacao_atual', models.ForeignKey(to='yearbook.Lotacao')),
             ],
             options={
@@ -60,6 +62,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('identificador', models.CharField(max_length=200)),
+                ('predio', models.CharField(max_length=200)),
+                ('andar', models.IntegerField()),
             ],
             options={
             },
@@ -70,7 +74,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nome', models.CharField(max_length=200)),
-                ('abreviacao', models.CharField(max_length=200, blank=True)),
+                ('sigla', models.CharField(max_length=200, blank=True)),
+                ('telefone', models.CharField(max_length=30)),
+                ('ramal', models.CharField(max_length=5)),
+                ('localidade', models.CharField(max_length=300)),
                 ('parent', models.ForeignKey(related_name=b'children', to='yearbook.Unidade_Organizacional', null=True)),
             ],
             options={
@@ -79,14 +86,20 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='sala',
-            name='unidade',
+            name='uorg',
             field=models.ForeignKey(to='yearbook.Unidade_Organizacional'),
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='cargo',
-            name='oucupante',
-            field=models.ForeignKey(to='yearbook.Pessoa'),
+            model_name='lotacao',
+            name='sala',
+            field=models.ForeignKey(to='yearbook.Sala', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='lotacao',
+            name='uorg',
+            field=models.ForeignKey(to='yearbook.Unidade_Organizacional'),
             preserve_default=True,
         ),
     ]

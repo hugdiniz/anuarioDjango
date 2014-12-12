@@ -1,5 +1,14 @@
 function detalharServidor(id) {
 
+    json = $.getJSON('/anuario/pessoa/'+id+'/detail/', {}, function(json, textStatus) {
+        $('#cargoServidor').text(json['cargo']);
+        $('#salaServidor').text(json['sala']);
+        $('#funcaoServidor').text(json['funcao']);
+        $('#nomeServidor').text(json['nome']);
+    });
+
+    console.log(json);
+
     //TODO: Ajax do para comunuicação
     $("#modalServidor").modal("show");
 }

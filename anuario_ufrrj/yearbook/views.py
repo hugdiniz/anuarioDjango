@@ -15,6 +15,12 @@ import json
 
 # Create your views here.
 
+class Pessoa_json:
+	id = 0
+	nome = ""
+	cargo = ""
+	funcao = ""
+
 
 def index(request):
 	try:
@@ -26,12 +32,26 @@ def index(request):
 		raise Http404
 
 def pessoa_info(request, pessoa_id):
-	try:
-		pessoa = Pessoa.objects.get(pk=pessoa_id)
-		lotacao = pessoa.lotacao_atual
-		return HttpResponse("Voce esta detalhando a pessoa %s" % pessoa_id)
-	except Exception, e:
-		raise Http404
+
+	pessoa = Pessoa.objects.get(pk=pessoa_id)
+	lotacoes_object = Lotacao.objects.filter(pessoa=pessoa)
+	lotacoes = []
+	for lotacao in lotacoes_object:
+		lotacoes.append(lotacao.nome)
+		
+
+	
+	# pjson = Pessoa_json(id=pessoa.pk,nome=pes.nome,cargo=pessoa.cargo, funcao=lotacao.funcao.nome)
+
+	dicionario_pessoa = {
+						'id' 	: pessoa.pk,
+						'nome' 	: pessoa.nome,
+						'cargo' : pessoa.cargo.nome,
+						'funcao': lotacoes
+						}
+
+	json_pessoa = json.dumps(dicionario_pessoa)
+	return HttpResponse(json_pessoa)
 	
 
 def uorg_info(request, uorg_id):
@@ -42,7 +62,8 @@ def uorg_info(request, uorg_id):
 		lotacoes = Lotacao.objects.filter(uorg=uorg)
 		pessoas = []
 		for lotacao in lotacoes:
-			pessoas.append(Pessoa.objects.get(lotacao_atual=lotacao))
+			pessoa = lotacao.pessoa
+			pessoas.append(pessoa)
 
 		salas = Sala.objects.filter(uorg=uorg)
 

@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('yearbook', '0003_auto_20141209_1710'),
+        ('yearbook', '0001_initial'),
     ]
 
     operations = [
-        migrations.RenameField(
+        migrations.AlterField(
             model_name='unidade_organizacional',
-            old_name='abreviacao',
-            new_name='sigla',
+            name='localidade',
+            field=models.CharField(max_length=300, blank=True),
         ),
     ]
