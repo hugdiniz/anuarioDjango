@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from yearbook.models import Unidade_Organizacional
 from yearbook.models import Pessoa
@@ -28,7 +28,7 @@ def index(request):
 def pessoa_info(request, pessoa_id):
 	try:
 		pessoa = Pessoa.objects.get(pk=pessoa_id)
-		lotacao = Lotacao.objects.get(pessoa_id)
+		lotacao = pessoa.lotacao_atual
 		return HttpResponse("Voce esta detalhando a pessoa %s" % pessoa_id)
 	except Exception, e:
 		raise Http404

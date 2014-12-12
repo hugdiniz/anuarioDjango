@@ -32,7 +32,7 @@
             {% if uorg %}
             <li>
                 {% if uorg.parent %}
-                    <label id="UFRRJMenu" onclick="detalharUorg('UFRRJMenu')" class="nav-header ativo"> <a href="{% url 'uorg_info' uorg.parent.pk %}"> {{uorg.parent.sigla}} </a> </label>
+                    <a href="{% url 'uorg_info' uorg.parent.pk %}"><label id="UFRRJMenu" onclick="detalharUorg('UFRRJMenu')" class="nav-header ativo">  {{uorg.parent.sigla}}  </label></a>
                 {% else %}
                     <label id="UFRRJMenu" onclick="detalharUorg('UFRRJMenu')" class="nav-header"> {{uorg.sigla}} </label>
                 {% endif %}
@@ -41,9 +41,9 @@
                 <ul class="nav nav-list tree">
                     {% for sub_uorg in sub_uorgs %}
                         <li>
-                            <label id="institutoZootecniaMenu" onclick="detalharUorg('institutoZootecniaMenu')" class="naoAtivo tree-toggler nav-header">
-                                <a href="{% url 'uorg_info' sub_uorg.pk %}"> {{sub_uorg.nome}} </a>
-                            </label>
+                            <a href="{% url 'uorg_info' sub_uorg.pk %}"><label id="institutoZootecniaMenu" onclick="detalharUorg('institutoZootecniaMenu')" class="naoAtivo tree-toggler nav-header">
+                                 {{sub_uorg.nome}} 
+                            </label></a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -112,20 +112,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 id="nomeServidor" class="modal-title">Ana Maria Dantas Soares</h4>
+        <h4 id="nomeServidor" class="modal-title"></h4>
       </div>
       <div class="modal-body">
         <p>
             <span>Cargo:</span>
-            <span id="cargoServidor">Docente</span>
+            <span id="cargoServidor"></span>
         </p>
         <p>
             <span>Sala:</span>
-            <span id="salaServidor">Sala 123 - A</span>
+            <span id="salaServidor"></span>
         </p>
          <p>
             <span>Função:</span>
-            <span id="funcaoServidor">Reitora</span>
+            <span id="funcaoServidor"></span>
         </p>    
       </div>
       <div class="modal-footer">
