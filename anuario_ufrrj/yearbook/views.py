@@ -3,6 +3,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from yearbook.models import Unidade_Organizacional
+from yearbook.models import Pessoa
+from yearbook.models import Cargo
+from yearbook.models import Funcao
+from yearbook.models import Sala
+from yearbook.models import Lotacao
 from django.core import serializers
 import json
 
@@ -15,13 +20,7 @@ def index(request):
 	try:
 		uorg = Unidade_Organizacional()
 		parent_uorgs_list = uorg.recuperar_unidades_raiz()
-
-		template = loader.get_template('angularJS/index.html')
-
-		context = RequestContext(request, {
-			'parent_uorgs_list' : parent_uorgs_list,
-			})
-		return HttpResponse(template.render(context))
+		return uorg_info(request, parent_uorgs_list[0].pk)
 
 	except Unidade_Organizacional.DoesNotExist:
 		raise Http404
@@ -29,25 +28,38 @@ def index(request):
 def pessoa_info(request, pessoa_id):
 	try:
 		pessoa = Pessoa.objects.get(pk=pessoa_id)
-
-	except Exception, e:
-		raise
-	else:
-		pass
-	finally:
-		pass
+		lotacao = Lotacao.objects.get(pessoa_id)
 		return HttpResponse("Voce esta detalhando a pessoa %s" % pessoa_id)
+	except Exception, e:
+		raise Http404
+	
 
 def uorg_info(request, uorg_id):
 	try:
 		uorg = Unidade_Organizacional.objects.get(pk=uorg_id)
-		sub_uorgs = uorg.get_sons
-		servidores = 
+		parent_uorg = uorg.parent
 
-	except Question.DoesNotExist:
+		sub_uorgs = uorg.get_sons
+		lotacoes = Lotacao.objects.filter(uorg=uorg)
+		pessoas = []
+		for lotacao in lotacoes:
+			pessoas.append(lotacao)
+
+		template = loader.get_template('angularJS/index.html')
+
+		context = RequestContext(request, {
+			'uorg' 		: uorg,
+			'sub_uorgs'	: sub_uorgs,
+			'pessoas'	: pessoas,
+			'parent_uorg' : parent_uorg,
+ 			})
+
+		return HttpResponse(template.render(context))
+
+	except Unidade_Organizacional.DoesNotExist:
 		raise Http404
 
-	return HttpResponse("Voce esta detalhando a Unidade %s" % uorg_id)
+	
 
 def detail_cargo(request, cargo_id):
 	return HttpResponse("Voce esta procurando o Cargo %s" % cargo_id)

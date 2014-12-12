@@ -17,15 +17,6 @@ class Cargo(models.Model):
     def __str__(self):
         return self.nome
 
-class Lotacao(models.Model):
-    data_inicio = models.DateField()
-    data_fim = models.DateField(blank=True)
-    funcao = models.ForeignKey(Funcao)
-    uorg = models.ForeignKey(Unidade_Organizacional)
-    
-    def __str__(self):
-        return self.nome
-
 class Unidade_Organizacional(models.Model):
     nome = models.CharField(max_length=200)
     sigla = models.CharField(max_length=200, blank=True)
@@ -48,8 +39,6 @@ class Unidade_Organizacional(models.Model):
     def recuperar_unidades_raiz(self):
         return Unidade_Organizacional.objects.filter(parent=None)
 
-    def recuperar_arvore(self):
-        return serializers.serializer("json", Unidade_Organizacional.objects.all())
 
 class Sala(models.Model):
     identificador = models.CharField(max_length=200)
@@ -63,6 +52,18 @@ class Sala(models.Model):
     def get_unidade(self):
         return self.unidade
 
+
+class Lotacao(models.Model):
+    comentarios = models.CharField(blank=True, max_length=500)
+    funcao = models.ForeignKey(Funcao)
+    uorg = models.ForeignKey(Unidade_Organizacional)
+    
+    def __str__(self):
+        return self.nome
+
+    def get_lotacoes_uorg(self, unidade):
+        return Lotacao.objects.filter(uorg=unidade)
+
 class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
     nascimento = models.DateTimeField('data de nascimento')
@@ -73,5 +74,6 @@ class Pessoa(models.Model):
 
     def __str__(self):
         return self.nome
+
 
 
