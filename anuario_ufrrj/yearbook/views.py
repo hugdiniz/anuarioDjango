@@ -2,25 +2,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
+from django.core import serializers
+from django.views import generic
+
+
 from yearbook.models import Unidade_Organizacional
 from yearbook.models import Pessoa
 from yearbook.models import Cargo
 from yearbook.models import Funcao
 from yearbook.models import Sala
 from yearbook.models import Lotacao
-from django.core import serializers
+
+
 import json
 
 
 
 # Create your views here.
-
-class Pessoa_json:
-	id = 0
-	nome = ""
-	cargo = ""
-	funcao = ""
-
 
 def index(request):
 	try:
@@ -38,7 +36,7 @@ def pessoa_info(request, pessoa_id):
 	lotacoes = []
 	for lotacao in lotacoes_object:
 		lotacoes.append(lotacao.nome)
-		
+
 
 	
 	# pjson = Pessoa_json(id=pessoa.pk,nome=pes.nome,cargo=pessoa.cargo, funcao=lotacao.funcao.nome)
@@ -67,7 +65,7 @@ def uorg_info(request, uorg_id):
 
 		salas = Sala.objects.filter(uorg=uorg)
 
-		template = loader.get_template('angularJS/index.html')
+		template = loader.get_template('yearbook/index.html')
 
 		context = RequestContext(request, {
 			'uorg' 		: uorg,
@@ -81,10 +79,28 @@ def uorg_info(request, uorg_id):
 	except Unidade_Organizacional.DoesNotExist:
 		raise Http404
 
+def todas_salas_uorg(uorg):
 	
+	uorg_sons = uorg.get_sons()
+	salas_vetor = uorg.get_salas()
+	salas_uorg = {uorg : salas_vetor}
 
-def detail_cargo(request, cargo_id):
-	return HttpResponse("Voce esta procurando o Cargo %s" % cargo_id)
+	for son in uorg_sons:
+		salas_uorg.update(todas_salas_uorg(son))
+
+	return salas_uorg
 
 
+def salas_uorg(request, uorg_id):
+	uorg = Unidade_Organizacional.objects.get(pk=uorg_id)
+
+	salas = todas_salas_uorg(uorg)
+	return salas
+def pessoas_uorg(request, uorg_id):
+	return None
+
+def login(request):
+	template = loader.get_template('yearbook/login.html')
+	context = RequestContext(request, {})
+	return HttpResponse(template.render(context))
 	

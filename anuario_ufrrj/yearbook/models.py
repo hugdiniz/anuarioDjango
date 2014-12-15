@@ -4,16 +4,15 @@ from django.core import serializers
 
 
 # Create your models here.
+class Cargo(models.Model):
+    nome = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
 
 class Funcao(models.Model):
     nome = models.CharField(max_length=200)
     
-    def __str__(self):
-        return self.nome
-
-class Cargo(models.Model):
-    nome = models.CharField(max_length=200)
-
     def __str__(self):
         return self.nome
 
@@ -24,6 +23,8 @@ class Unidade_Organizacional(models.Model):
     telefone = models.CharField(max_length=30)
     ramal = models.CharField(max_length=5)
     localidade = models.CharField(max_length=300, blank=True)
+    localidade_sala = models.ForeignKey('Sala', null=True, blank=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         if self.sigla is None:
@@ -36,8 +37,12 @@ class Unidade_Organizacional(models.Model):
     def get_sons(self):
         return Unidade_Organizacional.objects.filter(parent=self)
 
+    def get_salas(self):
+        return Sala.objects.filter(uorg=self)
+
     def recuperar_unidades_raiz(self):
         return Unidade_Organizacional.objects.filter(parent=None)
+
 
 
 class Sala(models.Model):
@@ -55,25 +60,30 @@ class Sala(models.Model):
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
+    telefone = models.CharField(max_length=30)
+    ramal = models.CharField(max_length=5)
     nascimento = models.DateTimeField('data de nascimento')
     foto = models.CharField(max_length=200, blank=True)
     cargo = models.ForeignKey(Cargo)
-    # historico = models.ManyToManyField(Lotacao, related_name='lotacoes_anteriores', blank=True)
-    ferias_inicio = models.DateTimeField('inicio das ferias', blank=True)
-    ferias_fim = models.DateTimeField('fim das ferias', blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    
+    ferias_inicio = models.DateField('inicio das ferias', blank=True, null=True)
+    ferias_fim = models.DateField('fim das ferias', blank=True, null=True)
 
+    historico = models.ManyToManyField('Lotacao', related_name='lotacoes_anteriores', blank=True)
 
     def __str__(self):
         return self.nome
 
 
 class Lotacao(models.Model):
+
     nome = models.CharField(max_length=200)
-    comentarios = models.CharField(blank=True, max_length=500)
-    funcao = models.ForeignKey(Funcao)
     pessoa = models.ForeignKey(Pessoa)
     uorg = models.ForeignKey(Unidade_Organizacional)
     sala = models.ForeignKey(Sala, blank=True)
+    funcao = models.ForeignKey(Funcao, blank=True, null=True)
+    entrada = models.DateField('data de entrada', null=True, blank=True, auto_now_add=True)
     
     def __str__(self):
         return self.nome

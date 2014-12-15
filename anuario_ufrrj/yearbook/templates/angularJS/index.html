@@ -62,7 +62,7 @@
         <h3 style="border-bottom: medium solid blueviolet;">
             <span> 
                 {% block title %}
-                    {{uorg.nome}}        
+                    {{uorg.nome}}
                 {% endblock title %} 
             </span> 
         </h3>
@@ -81,6 +81,7 @@
                 <span class="fieldTitle">Telefone: </span>
                 <span>{{uorg.telefone}}</span>
             </p>
+            <p><a href="{% url 'login' %}">login</a></p>
              
 
         </div>

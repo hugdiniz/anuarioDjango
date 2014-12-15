@@ -2,7 +2,7 @@ function detalharServidor(id) {
 
     json = $.getJSON('/anuario/pessoa/'+id+'/detail/', {}, function(json, textStatus) {
         $('#cargoServidor').text(json['cargo']);
-        $('#salaServidor').text(json['sala']);
+        $('#salaServidor').text(json['salas']);
         $('#funcaoServidor').text(json['funcao']);
         $('#nomeServidor').text(json['nome']);
     });
