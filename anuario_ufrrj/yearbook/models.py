@@ -12,6 +12,9 @@ class Cargo(models.Model):
 
 class Funcao(models.Model):
     nome = models.CharField(max_length=200)
+    data_inicio = models.DateField('data_inicio')
+    data_saida = models.DateField('data_saida')
+
     
     def __str__(self):
         return self.nome
@@ -70,6 +73,9 @@ class Pessoa(models.Model):
     ferias_inicio = models.DateField('inicio das ferias', blank=True, null=True)
     ferias_fim = models.DateField('fim das ferias', blank=True, null=True)
 
+    licenca_inicio = models.DateField('inicio licenca', null=True, blank=True)
+    licenca_fim = models.DateField('fim licenca', null=True, blank=True)
+
     historico = models.ManyToManyField('Lotacao', related_name='lotacoes_anteriores', blank=True)
 
     def __str__(self):
@@ -81,9 +87,12 @@ class Lotacao(models.Model):
     nome = models.CharField(max_length=200)
     pessoa = models.ForeignKey(Pessoa)
     uorg = models.ForeignKey(Unidade_Organizacional)
-    sala = models.ForeignKey(Sala, blank=True)
+    sala = models.ForeignKey(Sala, blank=True, null=True)
     funcao = models.ForeignKey(Funcao, blank=True, null=True)
+
     entrada = models.DateField('data de entrada', null=True, blank=True, auto_now_add=True)
+    afastamento = models.DateField('data de afastamento', null=True, blank=True)
+
     
     def __str__(self):
         return self.nome
