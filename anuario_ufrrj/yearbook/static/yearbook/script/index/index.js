@@ -18,7 +18,7 @@ function detalharUorg(idComponente) {
     $(".ativo").addClass("naoAtivo");
     $(".ativo").removeClass("ativo");
     $("#"+idComponente).addClass("ativo");
-   $("#"+idComponente).removeClass("naoAtivo");
+    $("#"+idComponente).removeClass("naoAtivo");
 }
 
 $(document).ready(function () {
@@ -26,3 +26,17 @@ $(document).ready(function () {
         $(this).parent().children('ul.tree').toggle(300);
     });
 }); 
+
+
+// funcoes chamadas mostrar os modais dos forms
+function showFormUorg(){}
+function showFormPessoa() {}
+function showFormSala() {}
+function showFormLotacao() {}
+
+
+// funcoes chamadas para salvar as alteracoes feitas no form
+function submitFormUorg(){}
+function submitFormPessoa() {}
+function submitFormSala() {}
+function submitFormLotacao() {}
