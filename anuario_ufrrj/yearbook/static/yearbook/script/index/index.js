@@ -29,8 +29,11 @@ $(document).ready(function () {
 
 
 // funcoes chamadas mostrar os modais dos forms
-function showFormUorg(){
-    alert('Form de Edicao Uorg');
+function showFormUorg(uorgId){
+    if(uorgId)
+        alert('Form de Edicao Uorg : ' + uorgId);
+    else
+        alert('Form de Edicao Uorg');
 }
 function showFormPessoa(pessoaId) {
     if(pessoaId)
