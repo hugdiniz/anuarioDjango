@@ -29,14 +29,36 @@ $(document).ready(function () {
 
 
 // funcoes chamadas mostrar os modais dos forms
-function showFormUorg(){}
-function showFormPessoa() {}
-function showFormSala() {}
-function showFormLotacao() {}
+function showFormUorg(){
+    alert('Form de Edicao Uorg');
+}
+function showFormPessoa(pessoaId) {
+    if(pessoaId)
+        alert('Form de Edicao Pessoa: '+pessoaId);
+    else
+        alert('Form de Edicao Pessoa');
+}
+function showFormSala(salaId) {
+    if(salaId)
+        alert('Form Edicao Sala : ' + salaId);
+    else
+        alert('Form Edicao Sala');
+}
+function showFormLotacao(lotacaoId) {
+    if(lotacaoId)
+        alert('Form edicao Lotacao - Lotacao: ' + lotacaoId);
+    else
+        alert('Form edicao Lotacao');
+
+}
 
 
 // funcoes chamadas para salvar as alteracoes feitas no form
-function submitFormUorg(){}
+$('#form-test').submit(function(event) {
+    json = JSON.stringify($('#form-test').serializeArray());
+    alert(json);
+    return false;
+});
 function submitFormPessoa() {}
 function submitFormSala() {}
 function submitFormLotacao() {}

@@ -99,3 +99,9 @@ class Lotacao(models.Model):
 
     def get_lotacoes_uorg(self, unidade):
         return Lotacao.objects.filter(uorg=unidade)
+
+
+class User(models.Model):
+    nome = models.CharField(max_length=200)
+    password = models.CharField(max_length=16)
+    uorg = models.ForeignKey(Unidade_Organizacional)
