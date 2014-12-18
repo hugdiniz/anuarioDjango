@@ -22,7 +22,7 @@ class Funcao(models.Model):
 class Unidade_Organizacional(models.Model):
     nome = models.CharField(max_length=200)
     sigla = models.CharField(max_length=200, blank=True)
-    parent = models.ForeignKey('self', null=True, related_name='children')
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     telefone = models.CharField(max_length=30)
     ramal = models.CharField(max_length=5)
     localidade = models.CharField(max_length=300, blank=True)
@@ -65,7 +65,7 @@ class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
     telefone = models.CharField(max_length=30)
     ramal = models.CharField(max_length=5)
-    nascimento = models.DateTimeField('data de nascimento')
+    nascimento = models.DateField('data de nascimento')
     foto = models.CharField(max_length=200, blank=True)
     cargo = models.ForeignKey(Cargo)
     email = models.CharField(max_length=100, null=True, blank=True)

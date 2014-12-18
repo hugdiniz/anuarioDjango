@@ -20,11 +20,14 @@ urlpatterns = patterns('',
 	#urls referentes a salas
 	url(r'^sala/save/(?P<user_id>\d+)$', views.salvar_sala, name='sala_save'),
 	url(r'^sala/(?P<uorg_id>\d+)/$', views.salas_uorg, name='salas_uorg'),
-	url(r'^sala/search/(?P<sala_nome>\w+)/$', views.recuperar_salas_autocomplete, name='salas_autocomplete'),
+	url(r'^sala/search/(?P<sala_nome>\w+)/$', views.recuperar_salas_autocomplete_get, name='salas_autocomplete_get'),
+	url(r'^sala/search/$', views.recuperar_salas_autocomplete, name='salas_autocomplete'),
 
 
 	# urls referentes a lotacao
 	url(r'^lotacao/save/(?P<user_id>\d+)$', views.salvar_lotacao, name='lotacao_save'),
+	url(r'^lotacao/search/(?P<user_id>\d+)$', views.salvar_lotacao, name='lotacao_search'),
+
 	
 
 	# url(r'^template/$', views.polymer, name='polymer'),

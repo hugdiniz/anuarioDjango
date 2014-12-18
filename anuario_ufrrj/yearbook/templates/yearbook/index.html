@@ -237,7 +237,9 @@
     {% endif %}
     <!-- /#wrapper -->
 
-    
+    <script type="text/javascript">
+        var salaAutoCompleteUrl = "{% url 'salas_autocomplete' %}";
+    </script>
     <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'yearbook/script/index/index.js' %}"></script>

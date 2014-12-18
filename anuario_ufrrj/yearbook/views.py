@@ -51,6 +51,16 @@ def pessoa_info(request, pessoa_id):
 	json_pessoa = json.dumps(dicionario_pessoa)
 	return HttpResponse(json_pessoa)
 	
+def todas_salas_uorg(uorg):
+	
+	uorg_sons = uorg.get_sons()
+	salas_vetor = uorg.get_salas()
+	salas_uorg = {uorg : salas_vetor}
+
+	for son in uorg_sons:
+		salas_uorg.update(todas_salas_uorg(son))
+
+	return salas_uorg
 
 def uorg_info(request, uorg_id):
 	uorg = get_object_or_404(Unidade_Organizacional, pk=uorg_id)
@@ -75,17 +85,6 @@ def uorg_info(request, uorg_id):
 			'funcoes'	: funcoes,
 		})
 
-def todas_salas_uorg(uorg):
-	
-	uorg_sons = uorg.get_sons()
-	salas_vetor = uorg.get_salas()
-	salas_uorg = {uorg : salas_vetor}
-
-	for son in uorg_sons:
-		salas_uorg.update(todas_salas_uorg(son))
-
-	return salas_uorg
-
 
 def salas_uorg(request, uorg_id):
 	uorg = Unidade_Organizacional.objects.get(pk=uorg_id)
@@ -93,12 +92,21 @@ def salas_uorg(request, uorg_id):
 	salas = todas_salas_uorg(uorg)
 	return salas
 
-def recuperar_salas_autocomplete(request, sala_nome):
+def recuperar_salas_autocomplete_get(request, sala_nome):
 	salas = list(Sala.objects.filter(identificador__istartswith=sala_nome)) #
 
 	json_salas = serializers.serialize('json', salas)
 
 	return HttpResponse(json_salas)
+
+def recuperar_salas_autocomplete(request):
+	# salas = list(Sala.objects.filter(identificador__istartswith=sala_nome)) #
+
+	# json_salas = serializers.serialize('json', salas)
+
+	# return HttpResponse(json_salas)
+	return None
+
 
 def recuperar_pessoas_autocomplete(request, pessoa_nome):
 	pessoas = list(Pessoa.objects.filter(nome__startswith=pessoa_nome))
