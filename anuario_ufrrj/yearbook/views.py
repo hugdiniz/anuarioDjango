@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from django.core import serializers
@@ -51,34 +51,6 @@ def pessoa_info(request, pessoa_id):
 	json_pessoa = json.dumps(dicionario_pessoa)
 	return HttpResponse(json_pessoa)
 	
-
-def uorg_info(request, uorg_id):
-	try:
-		uorg = Unidade_Organizacional.objects.get(pk=uorg_id)
-
-		sub_uorgs = uorg.get_sons
-		lotacoes = Lotacao.objects.filter(uorg=uorg)
-		pessoas = []
-		for lotacao in lotacoes:
-			pessoa = lotacao.pessoa
-			pessoas.append(pessoa)
-
-		salas = Sala.objects.filter(uorg=uorg)
-
-		template = loader.get_template('yearbook/index.html')
-
-		context = RequestContext(request, {
-			'uorg' 		: uorg,
-			'sub_uorgs'	: sub_uorgs,
-			'pessoas'	: pessoas,
-			'salas'		: salas,
- 			})
-
-		return HttpResponse(template.render(context))
-
-	except Unidade_Organizacional.DoesNotExist:
-		raise Http404
-
 def todas_salas_uorg(uorg):
 	
 	uorg_sons = uorg.get_sons()
@@ -90,12 +62,57 @@ def todas_salas_uorg(uorg):
 
 	return salas_uorg
 
+def uorg_info(request, uorg_id):
+	uorg = get_object_or_404(Unidade_Organizacional, pk=uorg_id)
+
+	sub_uorgs = uorg.get_sons
+	lotacoes = Lotacao.objects.filter(uorg=uorg)
+	pessoas = []
+	for lotacao in lotacoes:
+		pessoa = lotacao.pessoa
+		pessoas.append(pessoa)
+
+	salas = Sala.objects.filter(uorg=uorg)
+
+	funcoes = Lotacao.objects.filter(uorg=uorg).exclude(funcao__isnull=True)
+
+	return render(request, 'yearbook/index.html', {
+			'uorg' 		: uorg,
+			'sub_uorgs'	: sub_uorgs,
+			'pessoas'	: pessoas,
+			'lotacoes'	: lotacoes,
+			'salas'		: salas,
+			'funcoes'	: funcoes,
+		})
+
 
 def salas_uorg(request, uorg_id):
 	uorg = Unidade_Organizacional.objects.get(pk=uorg_id)
 
 	salas = todas_salas_uorg(uorg)
 	return salas
+
+def recuperar_salas_autocomplete_get(request, sala_nome):
+	salas = list(Sala.objects.filter(identificador__istartswith=sala_nome)) #
+
+	json_salas = serializers.serialize('json', salas)
+
+	return HttpResponse(json_salas)
+
+def recuperar_salas_autocomplete(request):
+	# salas = list(Sala.objects.filter(identificador__istartswith=sala_nome)) #
+
+	# json_salas = serializers.serialize('json', salas)
+
+	# return HttpResponse(json_salas)
+	return None
+
+
+def recuperar_pessoas_autocomplete(request, pessoa_nome):
+	pessoas = list(Pessoa.objects.filter(nome__startswith=pessoa_nome))
+	json_pessoas = serializers.serialize('json', pessoas)
+	return HttpResponse(json_pessoas)
+
 def pessoas_uorg(request, uorg_id):
 	return None
 
@@ -103,4 +120,23 @@ def login(request):
 	template = loader.get_template('yearbook/login.html')
 	context = RequestContext(request, {})
 	return HttpResponse(template.render(context))
+
+def salvar_pessoa(request, user_id):
+	return None
+
+def salvar_uorg(request, user_id):
+	return None
+
+def salvar_sala(request, user_id):
+	return None
+
+def salvar_lotacao(request, user_id):
+	return None
+
+
+
+
+
+
+
 	

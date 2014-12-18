@@ -18,7 +18,7 @@ function detalharUorg(idComponente) {
     $(".ativo").addClass("naoAtivo");
     $(".ativo").removeClass("ativo");
     $("#"+idComponente).addClass("ativo");
-   $("#"+idComponente).removeClass("naoAtivo");
+    $("#"+idComponente).removeClass("naoAtivo");
 }
 
 $(document).ready(function () {
@@ -26,3 +26,42 @@ $(document).ready(function () {
         $(this).parent().children('ul.tree').toggle(300);
     });
 }); 
+
+
+// funcoes chamadas mostrar os modais dos forms
+function showFormUorg(uorgId){
+    if(uorgId)
+        alert('Form de Edicao Uorg : ' + uorgId);
+    else
+        alert('Form de Edicao Uorg');
+}
+function showFormPessoa(pessoaId) {
+    if(pessoaId)
+        alert('Form de Edicao Pessoa: '+pessoaId);
+    else
+        alert('Form de Edicao Pessoa');
+}
+function showFormSala(salaId) {
+    if(salaId)
+        alert('Form Edicao Sala : ' + salaId);
+    else
+        alert('Form Edicao Sala');
+}
+function showFormLotacao(lotacaoId) {
+    if(lotacaoId)
+        alert('Form edicao Lotacao - Lotacao: ' + lotacaoId);
+    else
+        alert('Form edicao Lotacao');
+
+}
+
+
+// funcoes chamadas para salvar as alteracoes feitas no form
+$('#form-test').submit(function(event) {
+    json = JSON.stringify($('#form-test').serializeArray());
+    alert(json);
+    return false;
+});
+function submitFormPessoa() {}
+function submitFormSala() {}
+function submitFormLotacao() {}

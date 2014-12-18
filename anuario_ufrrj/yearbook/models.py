@@ -12,6 +12,9 @@ class Cargo(models.Model):
 
 class Funcao(models.Model):
     nome = models.CharField(max_length=200)
+    data_inicio = models.DateField('data_inicio')
+    data_saida = models.DateField('data_saida')
+
     
     def __str__(self):
         return self.nome
@@ -19,7 +22,7 @@ class Funcao(models.Model):
 class Unidade_Organizacional(models.Model):
     nome = models.CharField(max_length=200)
     sigla = models.CharField(max_length=200, blank=True)
-    parent = models.ForeignKey('self', null=True, related_name='children')
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     telefone = models.CharField(max_length=30)
     ramal = models.CharField(max_length=5)
     localidade = models.CharField(max_length=300, blank=True)
@@ -62,13 +65,16 @@ class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
     telefone = models.CharField(max_length=30)
     ramal = models.CharField(max_length=5)
-    nascimento = models.DateTimeField('data de nascimento')
+    nascimento = models.DateField('data de nascimento')
     foto = models.CharField(max_length=200, blank=True)
     cargo = models.ForeignKey(Cargo)
     email = models.CharField(max_length=100, null=True, blank=True)
     
     ferias_inicio = models.DateField('inicio das ferias', blank=True, null=True)
     ferias_fim = models.DateField('fim das ferias', blank=True, null=True)
+
+    licenca_inicio = models.DateField('inicio licenca', null=True, blank=True)
+    licenca_fim = models.DateField('fim licenca', null=True, blank=True)
 
     historico = models.ManyToManyField('Lotacao', related_name='lotacoes_anteriores', blank=True)
 
@@ -81,12 +87,21 @@ class Lotacao(models.Model):
     nome = models.CharField(max_length=200)
     pessoa = models.ForeignKey(Pessoa)
     uorg = models.ForeignKey(Unidade_Organizacional)
-    sala = models.ForeignKey(Sala, blank=True)
+    sala = models.ForeignKey(Sala, blank=True, null=True)
     funcao = models.ForeignKey(Funcao, blank=True, null=True)
+
     entrada = models.DateField('data de entrada', null=True, blank=True, auto_now_add=True)
+    afastamento = models.DateField('data de afastamento', null=True, blank=True)
+
     
     def __str__(self):
         return self.nome
 
     def get_lotacoes_uorg(self, unidade):
         return Lotacao.objects.filter(uorg=unidade)
+
+
+class User(models.Model):
+    nome = models.CharField(max_length=200)
+    password = models.CharField(max_length=16)
+    uorg = models.ForeignKey(Unidade_Organizacional)
