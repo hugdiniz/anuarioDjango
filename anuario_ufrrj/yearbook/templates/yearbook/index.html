@@ -38,21 +38,26 @@
                         </a>
                     </li>
                     {% else %}
-                    <li class="active"><a href="{% url 'uorg_info' uorg.pk %}"><i class="fa fa-university"></i> {{uorg.sigla}} </a></li>
+                    <br>
                     {% endif %}
-                    <li class="disabled"><a href="#"> {{uorg.sigla}} <br> Sub-Unidades<i class="fa fa-arrow-down divisor" id="arrow-down-icon"></i></a></li>
+                    <div class="uorgMenuPrincipalDiv cursorDefault ">
+                       
+                        <span class="uorgPrincipalMenu">{{uorg.nome}} </span>     
+                        <span class="uorgSubUnidades" href="#"><br>Sub-Unidades<i class="fa fa-arrow-down divisor" id="arrow-down-icon"></i></span>
+                       
+                    </div>
                     {% if sub_uorgs %}
                     
                         {% for sub_uorg in sub_uorgs %}
-                            <li><a href="{% url 'uorg_info' sub_uorg.pk %}"><i class="fa fa-university"></i> {{sub_uorg.nome}} </a></li>
+                            <li><a class="uorgSubUnidades" href="{% url 'uorg_info' sub_uorg.pk %}"><i class="fa fa-university"></i> {{sub_uorg.nome}} </a></li>
                         {% endfor %}
                     {% endif %}
-                    <li><a href="#" onclick="showFormUorg()">Adicionar Sub-Unidade <i class="fa fa-plus"></i> </a></li>
+                    <li><a class="uorgSubUnidades" href="#" onclick="showFormUorg()">Adicionar Sub-Unidade <i class="fa fa-plus"></i> </a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown user-dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
+                       <a href="#" class="dropdown-toggle linksMenu" data-toggle="dropdown"><i class="fa fa-user"></i> <span>Steve Miller</span><b class="caret"></b></a>
                        <ul class="dropdown-menu">
                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
                            <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>

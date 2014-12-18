@@ -17,14 +17,12 @@ body {
 }
 .menuPrincipal{
   box-shadow: 5px 0px 5px #999;
-  background: none repeat scroll 0 0 #428bca !important;
-  color: white;
+  background: none repeat scroll 0 0 #428bca !important;  
 
 }
 .menuSecundario{
   box-shadow: 5px 0 5px -5px #333;
-  background: none repeat scroll 0 0 #428bca !important;
-  color: white;
+  background: none repeat scroll 0 0 #FFF !important; 
   border-right-color: white !important;
   border-right-width: 1px !important;
   border-right-style: inset !important;
@@ -145,7 +143,7 @@ table.tablesorter thead tr th:hover {
   .side-nav {
 	margin-left: -225px;
 	left: 225px;
-	width: 225px;
+	width: 230px;
 	position: fixed;
 	top: 50px;
 	height: 100%;
@@ -205,4 +203,31 @@ table.tablesorter thead tr th:hover {
 
 #arrow-down-icon {
   margin-left: 5px;
+}
+.uorgSubUnidades {
+    left: 10%;
+    position: relative;  
+    color: #555 !important; 
+}
+a.uorgSubUnidades:hover {
+    color: #FFF !important; 
+}
+.uorgMenuPrincipalDiv{
+  margin-right: 15px;
+}
+.uorgPrincipalMenu {    
+    position: relative;   
+    font-size: 115%; 
+    bottom: 15px;
+    left: 20px;
+    top: -3px;  
+}
+.linksMenu{
+  color: white !important;
+}
+.linksMenu:hover {
+    color: #444 !important;
+} 
+.cursorDefault{
+   cursor: default !important;
 }
