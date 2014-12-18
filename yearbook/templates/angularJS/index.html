@@ -1,0 +1,171 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Stylesheets-->
+	<link class="cssdeck" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" class="cssdeck">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+     
+    <script type="text/javascript" src="{% static 'yearbook/script/index/index.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'yearbook/style/index/index.css' %}">
+</head>
+
+<body>  
+
+    {# Menu Lateral - arvore de uorgs #}
+ <div class="well" style="width: 300px; padding: 8px 0px; height: 100%;float:left;">
+    <div style="overflow-x: hidden; height: 100%;">
+         <a id="a" href="http://ufrrj.br" end>
+            <img class="ruralLogo" style="margin-left: 15%; height: 150px;max-width: 100%;" src="{% static 'yearbook/img/logomarca_ufrrj_azul2.png' %}" horizontal layout start/>
+         </a>
+        <ul class="nav nav-list">
+            <li><label class="tree-toggler nav-header">Anuario  </label></li>
+            
+            <li class="divider"></li>
+            {% if uorg %}
+            <li>
+                {% if uorg.parent %}
+                    <a href="{% url 'uorg_info' uorg.parent.pk %}"><label id="UFRRJMenu" onclick="detalharUorg('UFRRJMenu')" class="nav-header ativo">  {{uorg.parent.sigla}}  </label></a>
+                {% else %}
+                    <label id="UFRRJMenu" onclick="detalharUorg('UFRRJMenu')" class="nav-header"> {{uorg.sigla}} </label>
+                {% endif %}
+                
+                {% if sub_uorgs %}
+                <ul class="nav nav-list tree">
+                    {% for sub_uorg in sub_uorgs %}
+                        <li>
+                            <a href="{% url 'uorg_info' sub_uorg.pk %}"><label id="institutoZootecniaMenu" onclick="detalharUorg('institutoZootecniaMenu')" class="naoAtivo tree-toggler nav-header">
+                                 {{sub_uorg.nome}} 
+                            </label></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+
+<div id="corpo" class="painel">
+
+    {# Detalhando Uorg #}
+    <div id="nomeUorg">
+        <h3 style="border-bottom: medium solid blueviolet;">
+            <span> 
+                {% block title %}
+                    {{uorg.nome}}
+                {% endblock title %} 
+            </span> 
+        </h3>
+    </div>
+    <div id="corpoInformacao">
+        <div class="informacao">
+            <p>                
+                <span class="fieldTitle">Localização: </span>
+                <span >{{uorg.localidade}}</span>
+            </p>
+            <p>
+                <span class="fieldTitle">Abreviação: </span>
+                <span>{{uorg.sigla}}</span>
+            </p>
+            <p>
+                <span class="fieldTitle">Telefone: </span>
+                <span>{{uorg.telefone}}</span>
+            </p>
+            <p><a href="{% url 'login' %}">login</a></p>
+             
+
+        </div>
+
+
+        {% if pessoas %}
+        <div class="painelServidores"> 
+            <h5 style="border-bottom: medium solid blueviolet;">
+                <span>Servidores</span>
+            </h5>
+            <div class="list-group">    
+                {% for pessoa in pessoas %}
+                <a href="#" class="list-group-item" onclick="detalharServidor( {{pessoa.pk}} )">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span> {{pessoa.nome}} </span>              
+                </a>                 
+                {% endfor %}
+            </div>
+        </div>    
+        {% endif %}
+
+       {% if salas %}
+            <div class="painelSalas">
+                <h5 style="border-bottom: medium solid blueviolet"><span>Salas</span></h5>   
+            </div>
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Identificador</th>
+                            <th>Predio</th>
+                            <th>Andar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sala in salas %}
+                            <tr>
+                                <td>{{sala.identificador}}</td>
+                                <td>{{sala.predio}}</td>
+                                <td>{{sala.andar}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            
+       {% endif %}
+        
+
+    </div>
+
+    <!-- Modal -->
+
+<div id="modalServidor" style="display: none; height: 100%; width: 150%; top: 0px;" class="modal fade" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 id="nomeServidor" class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p>
+            <span>Cargo:</span>
+            <span id="cargoServidor"></span>
+        </p>
+        <p>
+            <span>Sala:</span>
+            <span id="salaServidor"></span>
+        </p>
+         <p>
+            <span>Função:</span>
+            <span id="funcaoServidor"></span>
+        </p>    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>   
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+</body>
+</html>
+
+
+

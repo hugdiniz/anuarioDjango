@@ -1,0 +1,47 @@
+.ruralLogo:hover {background: url("../img/logomarca_ufrrj_pb_02.png") no-repeat; }
+
+.painel {
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    padding: 9px 14px;
+    float: left;
+    margin-left: 50px;
+    margin-top: 50px;
+    min-height: 450px;
+    width: 65%;
+}
+.informacao {
+    float: left;
+    width: 60%;
+}
+.painelServidores{
+    float: left;
+    width: 35%;
+}
+.painelSalas { 
+    float: left;
+    width: 70%;
+}
+.tree{
+    margin-left: 15px;  
+}
+.modal-backdrop {
+    z-index: -1;
+}
+.fieldTitle{
+    font-weight: bold;
+}
+.ativo
+{
+   background: none repeat scroll 0% 0% rgb(169, 194, 216);
+   color: rgb(9, 41, 68);
+}
+.naoAtivo{
+    color: #4483ba;
+}
+
+.botao-header-panel {
+    margin-top: 10px;
+}
