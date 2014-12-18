@@ -1,5 +1,7 @@
 ﻿/* Light Way Admin Bootstrap Theme by PrepBootstrap - http://www.prepbootstrap.com */
 body {
+
+  background:url("../../img/ufrrj-fachada-PB.jpg") no-repeat fixed center center / cover  rgba(0, 0, 0, 0);
   margin-top: 70px;
 }
 #wrapper {
@@ -12,6 +14,21 @@ body {
 
 .sui-cell {
     font-family: 'Trebuchet MS';
+}
+.menuPrincipal{
+  box-shadow: 5px 0px 5px #999;
+  background: none repeat scroll 0 0 #428bca !important;
+  color: white;
+
+}
+.menuSecundario{
+  box-shadow: 5px 0 5px -5px #333;
+  background: none repeat scroll 0 0 #428bca !important;
+  color: white;
+  border-right-color: white !important;
+  border-right-width: 1px !important;
+  border-right-style: inset !important;
+
 }
 
 /* Nav Messages */
