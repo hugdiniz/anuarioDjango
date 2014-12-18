@@ -1,3 +1,0 @@
-
-# Script para rodar o servidor de teste no formato acessível para a máquina host
-./manage.py runserver 0.0.0.0:8000

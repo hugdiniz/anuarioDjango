@@ -1,0 +1,255 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anuário UFRRJ</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/components-font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'yearbook/style/index/local.css' %}" />
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="menuPrincipal navbar navbar-inverse navbar-fixed-top" role="navigation">            
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span><i class="fa fa-bars"></i></span>
+                </button>
+                <a style="color: white;" class="navbar-brand" href="{% url 'index' %}">Anuário</a>
+            </div>
+            {% if uorg %}
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a style="color: white;" href="#">Pessoas</a></li>
+                    <li><a style="color: white;" href="#">Salas</a></li>
+                </ul>
+
+                <ul class="menuSecundario nav navbar-nav side-nav">
+                
+                    {% if uorg.parent %}
+                    <li>
+                        <a href="{% url 'uorg_info' uorg.parent.pk %}">
+                        <i class="fa fa-arrow-left"></i>
+                            {{uorg.parent.sigla}}
+                        </a>
+                    </li>
+                    {% else %}
+                    <br>
+                    {% endif %}
+                    <li>
+                        <div class="uorgMenuPrincipalDiv cursorDefault ">
+                       
+                        <span class="uorgPrincipalMenu">{{uorg.nome}} </span>     
+                        <span class="uorgSubUnidades" href="#"><br>Sub-Unidades<i class="fa fa-arrow-down divisor" id="arrow-down-icon"></i></span>
+                       
+                    </div>
+                    </li>
+                    {% if sub_uorgs %}
+                        {% for sub_uorg in sub_uorgs %}
+                            <li>
+                                <a class="uorgSubUnidades" href="{% url 'uorg_info' sub_uorg.pk %}"><i class="fa fa-university"></i> {{sub_uorg.nome}} </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    <li><a class="uorgSubUnidades" href="#" onclick="showFormUorg()">Adicionar Sub-Unidade <i class="fa fa-plus"></i> </a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right navbar-user">
+                    <li class="dropdown user-dropdown">
+                       <a href="#" class="dropdown-toggle linksMenu" data-toggle="dropdown"><i class="fa fa-user"></i> <span>Steve Miller</span><b class="caret"></b></a>
+                       <ul class="dropdown-menu">
+                           <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                           <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                           <li class="divider"></li>
+                           <li><a href="{% url 'login' %}"><i class="fa fa-power-off"></i> Log Out</a></li>
+                       </ul>
+                   </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1> {{uorg.nome}} <small> Unidade Organizacional </small></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+                            <h4 class="pull-left">
+                                <i id="icone-informacao" class="fa fa-info-circle"></i>Informações
+                            </h4>
+                            <div class="btn-group pull-right"><button class="btn btn-primary" onclick="showFormUorg({{uorg.pk}})"><i class="fa fa-pencil"></i></button></div>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <div class="field-title col-xs-3">
+                                    <p >Nome</p>
+                                </div>
+                                <div class="col-xs-9 ">
+                                    <p > {{uorg.nome}} </p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="field-title col-xs-3">
+                                    <p >Sigla</p>
+                                </div>
+                                <div class="col-xs-9 ">
+                                    <p > {{uorg.sigla}} </p>
+                                </div>
+                            </div>
+                            {% if uorg.telefone %}
+                            <div>
+                                <div class="field-title col-xs-3">
+                                    <p >Telefone</p>
+                                </div>
+                                <div class="col-xs-9 ">
+                                    <p > {{uorg.telefone}} </p>
+                                </div>
+                            </div>    
+                            {% endif %}
+                            {% if uorg.ramal %}
+                            <div>
+                                <div class="field-title col-xs-3">
+                                    <p >Ramal</p>
+                                </div>
+                                <div class="col-xs-9 ">
+                                    <p > {{uorg.ramal}} </p>
+                                </div>
+                            </div>    
+                            {% endif %}
+                            {% if uorg.localidade %}
+                            <div>
+                                <div class="field-title col-xs-3">
+                                    <p >Localidade</p>
+                                </div>
+                                <div class="col-xs-9 ">
+                                    <p > {{uorg.localidade}} </p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if uorg.localidade_sala %}
+                            <div>
+                                <div class="field-title col-xs-3">
+                                    <p >Sala</p>
+                                </div>
+                                <div class="col-xs-9 ">
+                                    <p > {{uorg.localidade_sala.identificador}} </p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+                            <h4 class="pull-left">
+                                <i class="fa fa-user" id="icone-informacao"></i> Funções Gratificadas
+                            </h4>
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-primary" onclick="showFormLotacao()"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="list-group"> {% comment %} Eu tirei a div panel-body pra lista preencher o corpo do panel{% endcomment %}
+                            {% for lotacao in funcoes %}
+                            <div class="list-group-item clearfix">
+                                <div class="col-xs-9">
+                                    <h4 class="list-group-item-heading">{{lotacao.funcao.nome}} </h4>
+                                    <p class="list-group-item-text"> {{lotacao.pessoa.nome}} </p>
+                                </div>
+                                <div class="col-xs-3">
+                                    <button class="btn btn-default" onclick="showFormLotacao({{ lotacao.pk }})"><i class="fa fa-pencil"></i></button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+                            <h4 class="pull-left">
+                                <i class="fa fa-users"></i> Servidores 
+                            </h4>
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-primary" onclick="showFormPessoa()"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                       <div class="list-group">
+                            {% for pessoa in pessoas %}
+                            <div class="list-group-item clearfix">
+                                <div class="col-xs-9">
+                                    <h4 class="list-group-item-heading"> {{pessoa.nome}} </h4>
+                                    <p class="list-group-item-text"> {{pessoa.cargo.nome}} </p>
+                                </div>
+                                <div class="col-xs-3">
+                                    <button class="btn btn-default" onclick="showFormPessoa({{pessoa.pk}})">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                       </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-8">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+                            <h4 class="pull-left"><i class="fa fa-building"></i> Salas</h4>
+                            <div class="pull-right">
+                                <button class="btn btn-primary" onclick="showFormSala()"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        {% for sala in salas %}
+                        <div class="list-group">
+                            <div class="list-group-item clearfix">
+                                <div class="col-xs-9"> 
+                                    <h4 class="list-group-item-heading"> {{sala.identificador}} </h4>
+                                    <p class="list-group-item-text">
+                                        <div class="col-xs-6" style="padding-left: 0px">Prédio: {{sala.predio}} </div>
+                                        <div class="col-xs-3">Andar: {{sala.andar}} </div>
+                                    </p>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="pull-right">
+                                        <button class="btn btn-default" onclick="showFormSala( {{sala.pk}} )"><i class="fa fa-pencil"></i></button>    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    {% endif %}
+    <!-- /#wrapper -->
+
+    <script type="text/javascript">
+        var salaAutoCompleteUrl = "{% url 'salas_autocomplete' %}";
+    </script>
+    <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'yearbook/script/index/index.js' %}"></script>
+</body>
+</html>
