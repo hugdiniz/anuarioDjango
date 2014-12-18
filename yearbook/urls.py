@@ -5,7 +5,7 @@ from yearbook import views
 urlpatterns = patterns('',
 	# anuario/index
 	url(r'^$', views.login, name='login'),
-	url(r'^principal/ $', views.index, name='index'),
+	url(r'^principal/$', views.index, name='index'),
 	
 	#urls referentes a uorg
 	url(r'^(?P<uorg_id>\d+)/$', views.uorg_info, name='uorg_info'),
