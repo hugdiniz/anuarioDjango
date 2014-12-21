@@ -4,7 +4,9 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from django.core import serializers
 from django.views import generic
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from yearbook.models import Unidade_Organizacional
 from yearbook.models import Pessoa
@@ -20,7 +22,7 @@ import json
 
 # Create your views here.
 
-
+@login_required(login_url='login')
 def index(request):
 	try:
 		uorg = Unidade_Organizacional()
@@ -84,6 +86,7 @@ def uorg_info(request, uorg_id):
 			'lotacoes'	: lotacoes,
 			'salas'		: salas,
 			'funcoes'	: funcoes,
+			'user'		: request.user,
 		})
 
 
@@ -118,23 +121,36 @@ def pessoas_uorg(request, uorg_id):
 	return None
 
 def render_login_page(request):
-	return render(request, 'yearbook/login.html', {})
+	return render(request, 'yearbook/login.html', {
+		'success'	: True,
+		})
 
 def efetuar_login(request):
 	if request.method == 'POST':
-		username = request['username']
-		password = request['password']
+		username = request.POST["username"]
+		password = request.POST["password"]
 
 		user = authenticate(username=username, password=password)
 
 		if user is not None:
 			if user.is_active:
-				pass
+				login(request, user)
+				return index(request)
+		else:
+			return render(request, 'yearbook/login.html', {
+				'username'	: username,
+				'success'	: False,
+			})		
+
 
 	# template = loader.get_template('yearbook/login.html')
 	# context = RequestContext(request, {,})
 	# return HttpResponse(template.render(context))
-	return render(request, 'yearbook/login.html', {})
+
+def efetuar_logout(request):
+	logout(request)
+	return render_login_page(request)
+
 
 def salvar_pessoa(request, user_id):
 	return None

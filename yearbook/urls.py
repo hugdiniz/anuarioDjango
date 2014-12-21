@@ -7,6 +7,10 @@ urlpatterns = patterns('',
 	# anuario/index
 	url(r'^$', views.render_login_page, name='login'),
 	url(r'^principal/$', views.index, name='index'),
+
+	# login
+	url(r'^login/$', views.efetuar_login, name='login_submit'),
+	url(r'^logout/$', views.efetuar_logout, name='logout'),
 	
 	#urls referentes a uorg
 	url(r'^(?P<uorg_id>\d+)/$', views.uorg_info, name='uorg_info'),
