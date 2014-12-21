@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from django.core import serializers
 from django.views import generic
-
+from django.contrib.auth.models import User
 
 from yearbook.models import Unidade_Organizacional
 from yearbook.models import Pessoa
@@ -19,6 +19,7 @@ import json
 
 
 # Create your views here.
+
 
 def index(request):
 	try:
@@ -116,10 +117,24 @@ def recuperar_pessoas_autocomplete(request, pessoa_nome):
 def pessoas_uorg(request, uorg_id):
 	return None
 
-def login(request):
-	template = loader.get_template('yearbook/login.html')
-	context = RequestContext(request, {})
-	return HttpResponse(template.render(context))
+def render_login_page(request):
+	return render(request, 'yearbook/login.html', {})
+
+def efetuar_login(request):
+	if request.method == 'POST':
+		username = request['username']
+		password = request['password']
+
+		user = authenticate(username=username, password=password)
+
+		if user is not None:
+			if user.is_active:
+				pass
+
+	# template = loader.get_template('yearbook/login.html')
+	# context = RequestContext(request, {,})
+	# return HttpResponse(template.render(context))
+	return render(request, 'yearbook/login.html', {})
 
 def salvar_pessoa(request, user_id):
 	return None
