@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core import serializers
 from django.views import generic
@@ -65,6 +65,7 @@ def todas_salas_uorg(uorg):
 
 	return salas_uorg
 
+@login_required(login_url='login')
 def uorg_info(request, uorg_id):
 	uorg = get_object_or_404(Unidade_Organizacional, pk=uorg_id)
 
@@ -121,9 +122,15 @@ def pessoas_uorg(request, uorg_id):
 	return None
 
 def render_login_page(request):
-	return render(request, 'yearbook/login.html', {
-		'success'	: True,
-		})
+	if 'next' in request.GET:
+		return render(request, 'yearbook/login.html', {
+			'success'	: True,
+			'next'		: request.GET['next'],
+			})
+	else:
+		return render(request, 'yearbook/login.html', {
+			'success'	: True,
+			})
 
 def efetuar_login(request):
 	if request.method == 'POST':
@@ -135,7 +142,10 @@ def efetuar_login(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return index(request)
+				if request.POST['next']:
+					return HttpResponseRedirect(request.POST['next'])
+				else:
+					return index(request)
 		else:
 			return render(request, 'yearbook/login.html', {
 				'username'	: username,

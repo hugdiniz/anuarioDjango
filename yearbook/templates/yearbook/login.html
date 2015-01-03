@@ -63,6 +63,7 @@
             {% endif %}
             <form class="form-group {% if not success %}has-error{% endif %} form-login"  action="{% url 'login_submit' %}"method="POST">
                 {% csrf_token %}
+                <input type="hidden" value="{{next}}" name="next">
                 <div class="login-text">
                     <h3>Bem Vindo</h3>
                 </div>
