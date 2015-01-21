@@ -29,19 +29,20 @@ def index(request):
 		parent_uorgs_list = uorg.recuperar_unidades_raiz()
 		return uorg_info(request, parent_uorgs_list[0].pk)
 
-	except Unidade_Organizacional.DoesNotExist:
+	except (Unidade_Organizacional.DoesNotExist, IndexError):
 		raise Http404
 
-def pessoa_info(request, pessoa_id):
+def pessoa_info(request):
 
-	pessoa = Pessoa.objects.get(pk=pessoa_id)
-	lotacoes_object = Lotacao.objects.filter(pessoa=pessoa)
-	lotacoes = []
-	for lotacao in lotacoes_object:
-		lotacoes.append(lotacao.nome)
+	pessoa_id = request.GET['pessoa_id']
 
+	if pessoa_id:
+		pessoa = Pessoa.objects.get(pk=pessoa_id)
+		lotacoes_object = Lotacao.objects.filter(pessoa=pessoa)
+		lotacoes = []
+		for lotacao in lotacoes_object:
+			lotacoes.append(lotacao.nome)
 
-	
 	# pjson = Pessoa_json(id=pessoa.pk,nome=pes.nome,cargo=pessoa.cargo, funcao=lotacao.funcao.nome)
 
 	dicionario_pessoa = {
@@ -120,6 +121,36 @@ def recuperar_pessoas_autocomplete(request, pessoa_nome):
 
 def pessoas_uorg(request, uorg_id):
 	return None
+
+@login_required(login_url='login')
+def pessoas_list(request):
+	pessoas = list(Pessoa.objects.filter())
+
+	return render(request, 'yearbook/pessoas.html', {
+		'pessoas'	: pessoas,
+		})
+
+@login_required(login_url='login')
+def lotacao_info(request):
+	if request.method == 'GET':
+		lotacao_id = request.GET['lotacao_id']
+		if lotacao_id:
+			lotacao = Lotacao.objects.get(pk=lotacao_id)
+			# json_funcao = serializers.serialize('json', lotacao)
+			lotacao_dict = {
+				'id'			: lotacao.pk,
+				'nome'			: lotacao.nome,
+				'pessoa'		: lotacao.pessoa.nome,
+				'uorg'			: lotacao.uorg.nome,
+				'sala'			: lotacao.sala.identificador,
+				'funcao'		: lotacao.funcao,
+				'entrada'		: lotacao.entrada,
+				'afastamento'	: lotacao.afastamento, 
+			}
+
+			json_lotacao = json.dumps(lotacao.__dict__)
+			return HttpResponse(lotacao.to_JSON)
+
 
 def render_login_page(request):
 	if 'next' in request.GET:

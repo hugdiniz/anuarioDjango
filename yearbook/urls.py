@@ -18,9 +18,10 @@ urlpatterns = patterns('',
 	# url(r'^pessoas/(?P<uorg_id>\d+)/$', views.pessoas_uorg, name='pessoas_uorg'),
 
 	# urls referentes a pessoa
-	url(r'^pessoa/(?P<pessoa_id>\d+)/detail/$', views.pessoa_info, name='pessoa_info'),
+	url(r'^pessoa/detail/$', views.pessoa_info, name='pessoa_info'),
 	url(r'^pessoa/save/(?P<user_id>\d+)$', views.salvar_pessoa, name='pessoa_save'),
 	url(r'^pessoa/search/(?P<pessoa_nome>\w+)/$', views.recuperar_pessoas_autocomplete, name='pessoas_autocomplete'),
+	url(r'^pessoa/list/$', views.pessoas_list, name='pessoas_list'),
 
 	#urls referentes a salas
 	url(r'^sala/save/(?P<user_id>\d+)$', views.salvar_sala, name='sala_save'),
@@ -30,10 +31,12 @@ urlpatterns = patterns('',
 
 
 	# urls referentes a lotacao
+	url(r'^lotacao/$', views.lotacao_info, name='lotacao_info'),
 	url(r'^lotacao/save/(?P<user_id>\d+)$', views.salvar_lotacao, name='lotacao_save'),
 	url(r'^lotacao/search/(?P<user_id>\d+)$', views.salvar_lotacao, name='lotacao_search'),
 
-	
+	# urls referentes a funcao
+
 
 	# url(r'^template/$', views.polymer, name='polymer'),
 
