@@ -100,6 +100,9 @@ class Lotacao(models.Model):
     def get_lotacoes_uorg(self, unidade):
         return Lotacao.objects.filter(uorg=unidade)
 
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
 
 class User(models.Model):
     nome = models.CharField(max_length=200)
