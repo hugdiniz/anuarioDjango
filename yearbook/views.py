@@ -32,6 +32,52 @@ def index(request):
 	except (Unidade_Organizacional.DoesNotExist, IndexError):
 		raise Http404
 
+@login_required(login_url='login')
+def uorg_info(request, uorg_id):
+	uorg = get_object_or_404(Unidade_Organizacional, pk=uorg_id)
+
+	sub_uorgs = uorg.get_sons
+	lotacoes = Lotacao.objects.filter(uorg=uorg)
+	pessoas = []
+	for lotacao in lotacoes:
+		pessoa = lotacao.pessoa
+		pessoas.append(pessoa)
+
+	salas = Sala.objects.filter(uorg=uorg)
+
+	funcoes = Lotacao.objects.filter(uorg=uorg).exclude(funcao__isnull=True)
+
+	return render(request, 'yearbook/index.html', {
+			'uorg' 		: uorg,
+			'sub_uorgs'	: sub_uorgs,
+			'pessoas'	: pessoas,
+			'lotacoes'	: lotacoes,
+			'salas'		: salas,
+			'funcoes'	: funcoes,
+			'user'		: request.user,
+		})
+
+@login_required(login_url='login')
+def lotacao_info(request):
+	if request.method == 'GET':
+		lotacao_id = request.GET['lotacao_id']
+		if lotacao_id:
+			lotacao = Lotacao.objects.get(pk=lotacao_id)
+			# json_funcao = serializers.serialize('json', lotacao)
+			lotacao_dict = {
+				'id'			: lotacao.pk,
+				'nome'			: lotacao.nome,
+				'pessoa'		: lotacao.pessoa.nome,
+				'uorg'			: lotacao.uorg.nome,
+				'sala'			: lotacao.sala.identificador,
+				'funcao'		: lotacao.funcao,
+				'entrada'		: lotacao.entrada,
+				'afastamento'	: lotacao.afastamento, 
+			}
+
+			json_lotacao = json.dumps(lotacao.__dict__)
+			return HttpResponse(lotacao.to_JSON)
+
 def pessoa_info(request):
 
 	pessoa_id = request.GET['pessoa_id']
@@ -66,30 +112,7 @@ def todas_salas_uorg(uorg):
 
 	return salas_uorg
 
-@login_required(login_url='login')
-def uorg_info(request, uorg_id):
-	uorg = get_object_or_404(Unidade_Organizacional, pk=uorg_id)
 
-	sub_uorgs = uorg.get_sons
-	lotacoes = Lotacao.objects.filter(uorg=uorg)
-	pessoas = []
-	for lotacao in lotacoes:
-		pessoa = lotacao.pessoa
-		pessoas.append(pessoa)
-
-	salas = Sala.objects.filter(uorg=uorg)
-
-	funcoes = Lotacao.objects.filter(uorg=uorg).exclude(funcao__isnull=True)
-
-	return render(request, 'yearbook/index.html', {
-			'uorg' 		: uorg,
-			'sub_uorgs'	: sub_uorgs,
-			'pessoas'	: pessoas,
-			'lotacoes'	: lotacoes,
-			'salas'		: salas,
-			'funcoes'	: funcoes,
-			'user'		: request.user,
-		})
 
 
 def salas_uorg(request, uorg_id):
@@ -129,27 +152,6 @@ def pessoas_list(request):
 	return render(request, 'yearbook/pessoas.html', {
 		'pessoas'	: pessoas,
 		})
-
-@login_required(login_url='login')
-def lotacao_info(request):
-	if request.method == 'GET':
-		lotacao_id = request.GET['lotacao_id']
-		if lotacao_id:
-			lotacao = Lotacao.objects.get(pk=lotacao_id)
-			# json_funcao = serializers.serialize('json', lotacao)
-			lotacao_dict = {
-				'id'			: lotacao.pk,
-				'nome'			: lotacao.nome,
-				'pessoa'		: lotacao.pessoa.nome,
-				'uorg'			: lotacao.uorg.nome,
-				'sala'			: lotacao.sala.identificador,
-				'funcao'		: lotacao.funcao,
-				'entrada'		: lotacao.entrada,
-				'afastamento'	: lotacao.afastamento, 
-			}
-
-			json_lotacao = json.dumps(lotacao.__dict__)
-			return HttpResponse(lotacao.to_JSON)
 
 
 def render_login_page(request):

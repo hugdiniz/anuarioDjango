@@ -55,13 +55,40 @@ function showFormLotacao(lotacaoId) {
 
 }
 
+function serializeForm(formJson) {
+    json = [];
+    for (var i = 0; i < formJson.length; i++) {
+        json[formJson[i].name] = formJson[i].value;
+    };
+    return json;
+}
+
 
 // funcoes chamadas para salvar as alteracoes feitas no form
 $('#form-test').submit(function(event) {
-    json = JSON.stringify($('#form-test').serializeArray());
-    alert(json);
+    json = serializeForm(event.target);
+    console.log(json);
     return false;
 });
+
+$('#form-manter-uorg').submit(function(event) {
+    json = serializeForm(event.target);
+    console.log(json);
+    return false; 
+});
+
+$('#form-manter-funcao').submit(function(event) {
+    json = serializeForm(event.target);
+    console.log(json);
+    return false; 
+});
+
+$('#form-manter-servidor').submit(function(event) {
+    json = serializeForm(event.target);
+    console.log(json);
+    return false; 
+});
+
 function submitFormPessoa() {}
 function submitFormSala() {}
 function submitFormLotacao() {}

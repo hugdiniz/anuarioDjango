@@ -29,6 +29,12 @@ class Unidade_Organizacional(models.Model):
     localidade_sala = models.ForeignKey('Sala', null=True, blank=True)
     email = models.CharField(max_length=100, blank=True, null=True)
 
+    class Meta:
+        permissions = (
+            ('view_uorgs', 'View Uorgs'),
+            ('edit_uorgs', 'Edit Uorgs'),
+        )
+
     def __str__(self):
         if self.sigla is None:
             return self.nome
