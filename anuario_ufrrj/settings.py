@@ -71,8 +71,8 @@ DATABASES = {
         'NAME': 'anuario',
         'USER': 'anuario',
         'PASSWORD': 'anuario',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'HOST': '192.168.99.100',
+        'PORT': '32769',
     }
 }
 
